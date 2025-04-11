@@ -4,6 +4,12 @@ from typing import List, Dict, Set
 import logging
 import os
 
+import pytz
+
+ist = pytz.timezone('Asia/Kolkata')
+ist_time = datetime.now(ist)
+
+
 logging.basicConfig(
     filename=os.path.join(os.path.dirname(__file__), "..", "logs", "scraper.log"),
     level=logging.INFO,
@@ -46,7 +52,7 @@ class Database:
                 cursor.execute("""
                     INSERT INTO news (headline, link, source, scraped_at)
                     VALUES (?, ?, ?, ?)
-                """, (headline, link, source, datetime.utcnow().replace(microsecond=0).isoformat()))
+                """, (headline, link, source,  ist_time.isoformat()))
                 conn.commit()
                 logging.info(f"Inserted news with link: {link}")
                 return True
