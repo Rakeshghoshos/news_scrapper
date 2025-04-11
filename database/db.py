@@ -46,7 +46,7 @@ class Database:
                 cursor.execute("""
                     INSERT INTO news (headline, link, source, scraped_at)
                     VALUES (?, ?, ?, ?)
-                """, (headline, link, source, datetime.utcnow()))
+                """, (headline, link, source, datetime.utcnow().replace(microsecond=0).isoformat()))
                 conn.commit()
                 logging.info(f"Inserted news with link: {link}")
                 return True
